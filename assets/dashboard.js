@@ -7,11 +7,12 @@ const solesD = (n) => "S/ " + Number(n).toLocaleString("es-PE", { minimumFractio
 /* ---------- tema ---------- */
 (function theme() {
   const root = document.documentElement;
+  // Claro por defecto; solo oscuro si el usuario lo eligió antes.
   const saved = localStorage.getItem("tema");
-  if (saved) root.setAttribute("data-theme", saved);
+  root.setAttribute("data-theme", saved === "dark" ? "dark" : "light");
   const btn = document.getElementById("theme");
   const btnM = document.getElementById("themeM");
-  const isDark = () => (root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark";
+  const isDark = () => root.getAttribute("data-theme") === "dark";
   const paint = () => {
     const ic = isDark() ? "☀" : "☾";
     if (btn) btn.innerHTML = ic + " <span>Tema</span>";
@@ -181,6 +182,13 @@ function calculadora() {
     }
     out.box.className = "verdict " + cls;
     out.lab.textContent = lab; out.big.textContent = big; out.exp.textContent = exp;
+    // expone el estado para el juego de medallas
+    window.__calcState = {
+      miembros: m, ingresos: ing, monto, total, linea, percap,
+      over: percap >= DATA.pobreza.canasta_consumo_pc,
+      extreme: percap < DATA.pobreza.canasta_alim_pc,
+    };
+    document.dispatchEvent(new CustomEvent("calc:update", { detail: window.__calcState }));
   }
   [rMiembros, rIngresos, rMonto].forEach((r) => r.addEventListener("input", render));
   render();
@@ -195,8 +203,8 @@ function mapa() {
     attribution: "&copy; OpenStreetMap &copy; CARTO", maxZoom: 10,
   }).addTo(map);
 
-  const costoColor = { 4: "#7a1f1a", 3: "#b1362f", 2: "#b5761a", 1: "#0f7a63" };
-  const pobColor = (p) => (p >= 40 ? "#7a1f1a" : p >= 30 ? "#b1362f" : p >= 20 ? "#b5761a" : "#0f7a63");
+  const costoColor = { 4: "#8f1020", 3: "#d5182f", 2: "#cf8a1e", 1: "#0f8a86" };
+  const pobColor = (p) => (p >= 40 ? "#8f1020" : p >= 30 ? "#d5182f" : p >= 20 ? "#cf8a1e" : "#0f8a86");
   let modo = "costo";
   let layer = L.layerGroup().addTo(map);
 
