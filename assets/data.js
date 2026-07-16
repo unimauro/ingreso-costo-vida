@@ -54,7 +54,29 @@ const DATA = {
     servicio_agua: 71.1,           // red pública dentro de la vivienda
     servicio_desague: 64.5,        // red pública dentro de la vivienda
     ejecucion: "agosto–octubre 2025 (recuperación en noviembre)",
+    mujeres_pct: 50.4, hombres_pct: 49.6, indice_masculinidad: 98.3,
+    edad_promedio: 33.8,
+    menor15: 23.7, edad_15_59: 62.0, mayor60: 14.3,
+    mayor60_1940: 6.4, mayor60_2017: 11.9,
   },
+
+  // --- Evolución poblacional por censo (INEI, millones) ---
+  censos_hist: [
+    { a: 1940, p: 7.0 }, { a: 1961, p: 10.4 }, { a: 1972, p: 14.1 },
+    { a: 1981, p: 17.8 }, { a: 1993, p: 22.6 }, { a: 2007, p: 28.2 },
+    { a: 2017, p: 31.2 }, { a: 2025, p: 34.16 },
+  ],
+
+  // --- Pirámide poblacional 2025 (% del total; estimación INEI, proyecciones) ---
+  // Anclada a los totales oficiales: <15=23,7%; 15-59=62,0%; 60+=14,3%; mujeres 50,4%.
+  piramide: [
+    { g: "0–14",  h: 12.1, m: 11.6 },
+    { g: "15–29", h: 12.4, m: 12.1 },
+    { g: "30–44", h: 10.7, m: 10.8 },
+    { g: "45–59", h: 7.8,  m: 8.2 },
+    { g: "60–74", h: 4.7,  m: 5.3 },
+    { g: "75+",   h: 1.9,  m: 2.4 },
+  ],
 };
 
 /* ============================================================

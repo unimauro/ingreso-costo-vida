@@ -136,6 +136,66 @@ function chartPobreza() {
   window.__charts.push(c);
 }
 
+/* ---------- Gráfico 3: pirámide poblacional ---------- */
+function chartPiramide() {
+  const ctx = document.getElementById("chPiramide");
+  if (!ctx) return;
+  const p = DATA.piramide;
+  const c = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: p.map((x) => x.g),
+      datasets: [
+        { label: "Hombres", data: p.map((x) => -x.h), backgroundColor: cssv("--c2"), borderRadius: 4 },
+        { label: "Mujeres", data: p.map((x) => x.m), backgroundColor: cssv("--rojo"), borderRadius: 4 },
+      ],
+    },
+    options: {
+      indexAxis: "y", responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: "bottom", labels: { boxWidth: 12, padding: 12 } },
+        tooltip: { callbacks: { label: (i) => i.dataset.label + ": " + Math.abs(i.raw) + "%" } },
+      },
+      scales: {
+        x: { stacked: true, grid: { color: cssv("--line") }, ticks: { callback: (v) => Math.abs(v) + "%" }, min: -14, max: 14 },
+        y: { stacked: true, grid: { display: false } },
+      },
+    },
+  });
+  window.__charts.push(c);
+}
+
+/* ---------- Gráfico 4: evolución poblacional por censo ---------- */
+function chartCensos() {
+  const ctx = document.getElementById("chCensos");
+  if (!ctx) return;
+  const h = DATA.censos_hist;
+  const c = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: h.map((x) => x.a),
+      datasets: [{
+        data: h.map((x) => x.p), label: "Población (millones)",
+        borderColor: cssv("--accent"), backgroundColor: "transparent",
+        pointBackgroundColor: cssv("--rojo"), pointRadius: 4, tension: 0.3, borderWidth: 3,
+        fill: false,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: (i) => i.raw + " M habitantes (" + h[i.dataIndex].a + ")" } },
+      },
+      scales: {
+        y: { beginAtZero: true, grid: { color: cssv("--line") }, ticks: { callback: (v) => v + " M" } },
+        x: { grid: { display: false } },
+      },
+    },
+  });
+  window.__charts.push(c);
+}
+
 /* ---------- Calculadora familiar ---------- */
 function calculadora() {
   const rMiembros = document.getElementById("cMiembros");
@@ -254,7 +314,15 @@ document.addEventListener("DOMContentLoaded", () => {
   chartDefaults();
   chartIngreso();
   chartPobreza();
+  chartPiramide();
+  chartCensos();
   calculadora();
   mapa();
   renderFAQ();
+  // Re-medir los charts cuando el layout/tipografías terminen de cargar
+  const relayout = () => (window.__charts || []).forEach((c) => { try { c.resize(); c.update(); } catch (e) {} });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+  addEventListener("load", relayout);
+  setTimeout(relayout, 250);
+  setTimeout(relayout, 900);
 });
