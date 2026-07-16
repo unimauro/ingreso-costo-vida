@@ -73,26 +73,11 @@ function chartIngreso() {
   const labels = ["Rural", "Nacional", "Urbano", "Lima (oficial)"];
   const vals = [d.rural, d.nacional, d.urbano, d.lima_oficial];
   const colors = vals.map((v) => (v >= linea ? cssv("--accent") : cssv("--danger")));
-  const c = new Chart(ctx, {
-    type: "bar",
-    data: { labels, datasets: [{ data: vals, backgroundColor: colors, borderRadius: 7, maxBarThickness: 62 }] },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: (i) => solesD(i.raw) + " / mes" } },
-        annotation: false,
-      },
-      scales: {
-        y: { beginAtZero: true, grid: { color: cssv("--line") }, ticks: { callback: (v) => soles(v) } },
-        x: { grid: { display: false } },
-      },
-    },
-  });
-  // línea de umbral dibujada manualmente
-  const plugin = {
+  // línea de umbral — plugin LOCAL solo para este gráfico
+  const umbral = {
     id: "umbral",
     afterDraw(ch) {
+      if (!ch.scales || !ch.scales.y) return;
       const y = ch.scales.y.getPixelForValue(linea);
       const { left, right } = ch.chartArea;
       const g = ch.ctx;
@@ -104,8 +89,22 @@ function chartIngreso() {
       g.restore();
     },
   };
-  Chart.register(plugin);
-  c.update();
+  const c = new Chart(ctx, {
+    type: "bar",
+    data: { labels, datasets: [{ data: vals, backgroundColor: colors, borderRadius: 7, maxBarThickness: 62 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: (i) => solesD(i.raw) + " / mes" } },
+      },
+      scales: {
+        y: { beginAtZero: true, grid: { color: cssv("--line") }, ticks: { callback: (v) => soles(v) } },
+        x: { grid: { display: false } },
+      },
+    },
+    plugins: [umbral],
+  });
   window.__charts.push(c);
 }
 
