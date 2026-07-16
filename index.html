@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ingresos por familia en el Perú 2025 · INEI, Censo y costo de vida</title>
+<meta name="description" content="¿Alcanza el ingreso para el costo de vida en el Perú? Dashboard con datos oficiales del INEI 2025: ingreso promedio, canasta básica por familia, pobreza, Censo 2025 y mapa de regiones más caras." />
+<meta name="author" content="Carlos Mauro Cárdenas" />
+<meta name="keywords" content="ingreso promedio Perú, canasta básica, costo de vida Perú, pobreza INEI, Censo 2025, ENAHO, salario Perú, familia" />
+<meta name="theme-color" content="#0f7a63" />
+<link rel="canonical" href="https://unimauro.github.io/ingreso-costo-vida/" />
+
+<!-- Open Graph / WhatsApp -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Ingresos por familia · Perú" />
+<meta property="og:title" content="¿Alcanza el ingreso para el costo de vida en el Perú? (2025)" />
+<meta property="og:description" content="Ingreso promedio S/ 1 887 vs. canasta familiar S/ 1 848. Datos oficiales del INEI: Censo 2025, pobreza y mapa de regiones más caras. Con calculadora y bot." />
+<meta property="og:url" content="https://unimauro.github.io/ingreso-costo-vida/" />
+<meta property="og:image" content="https://unimauro.github.io/ingreso-costo-vida/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="es_PE" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Ingresos por familia en el Perú 2025 · INEI" />
+<meta name="twitter:description" content="Ingreso promedio vs. canasta familiar, pobreza, Censo 2025 y mapa de regiones más caras. Con calculadora y bot Inti." />
+<meta name="twitter:image" content="https://unimauro.github.io/ingreso-costo-vida/assets/og-image.png" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f7a63'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='white' font-family='Georgia'%3ES%2F%3C/text%3E%3C/svg%3E" />
+
+<!-- Chart.js + Leaflet (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+
+<link rel="stylesheet" href="assets/styles.css" />
+
+<!-- Datos estructurados -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org","@type":"Dataset",
+  "name":"Ingresos por familia y costo de vida en el Perú (INEI 2025)",
+  "description":"Ingreso promedio mensual, canasta básica por familia, pobreza y Censo 2025 del Perú.",
+  "creator":{"@type":"Person","name":"Carlos Mauro Cárdenas"},
+  "isBasedOn":"https://www.inei.gob.pe/","temporalCoverage":"2025",
+  "spatialCoverage":"Perú"
+}
+</script>
+</head>
+<body>
+
+<!-- barra móvil -->
+<div class="mobilebar">
+  <button id="burger" aria-label="Abrir menú">☰</button>
+  <div class="brand"><span class="dot"></span> Ingresos · Perú</div>
+  <button id="themeM" aria-label="Cambiar tema">☾</button>
+</div>
+
+<!-- sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="side-brand"><span class="dot"></span> <div><b>Ingreso &amp;<br>Costo de vida</b><span>Perú · INEI 2025</span></div></div>
+  <nav class="side-nav">
+    <a href="#top" class="active"><span>🏠</span> Inicio</a>
+    <a href="#ingreso"><span>💵</span> Ingreso por área</a>
+    <a href="#familia"><span>🧮</span> Calculadora familiar</a>
+    <a href="#regiones"><span>🗺️</span> Mapa de regiones</a>
+    <a href="#pobreza"><span>📉</span> Pobreza 2025</a>
+    <a href="#faq"><span>❓</span> Preguntas frecuentes</a>
+    <a href="#fuentes"><span>📚</span> Fuentes</a>
+  </nav>
+  <div class="side-foot">
+    <button id="theme" aria-label="Cambiar tema">☾ <span>Tema</span></button>
+    <button id="askInti">🌞 <span>Pregunta a Inti</span></button>
+  </div>
+</aside>
+<div class="scrim" id="scrim"></div>
+
+<header class="hero" id="top"><div class="wrap">
+  <div class="eyebrow">INEI · ENAHO · Censo 2025</div>
+  <h1>¿Alcanza el ingreso para vivir en el Perú?</h1>
+  <p class="lede">Un dashboard con datos oficiales del INEI: cuánto gana en promedio un peruano,
+    cuánto cuesta mantener a una familia, quiénes son pobres o vulnerables, y qué regiones son
+    las más caras. Con calculadora familiar y el bot <b>Inti</b>.</p>
+  <div class="hero-stats">
+    <div class="hstat">
+      <div class="k">Ingreso promedio nacional · 2025</div>
+      <div class="v tnum"><small>S/</small>1 887</div>
+      <div class="d"><span class="up">▲ 6,9%</span> vs. 2024</div>
+    </div>
+    <div class="hstat amber">
+      <div class="k">Canasta familiar (4 personas)</div>
+      <div class="v tnum"><small>S/</small>1 848</div>
+      <div class="d">S/ 462 por persona / mes</div>
+    </div>
+    <div class="hstat red">
+      <div class="k">Pobreza monetaria · 2025</div>
+      <div class="v tnum">25,7<small style="font-size:.5em">%</small></div>
+      <div class="d">▼ 1,9 pp · 567 mil salieron</div>
+    </div>
+    <div class="hstat">
+      <div class="k">Población · Censo 2025</div>
+      <div class="v tnum">34,2<small style="font-size:.5em">M</small></div>
+      <div class="d">10,6 M hogares · ~3,1 p/hogar</div>
+    </div>
+  </div>
+</div></header>
+
+<!-- 01 INGRESO -->
+<section class="block" id="ingreso"><div class="wrap">
+  <div class="sec-head"><span class="sec-num">01</span><div>
+    <h2>Ingreso mensual por área</h2>
+    <p class="sec-sub">Ingreso promedio proveniente del trabajo (ENAHO 2025). La línea marca lo que
+      necesita una familia de 4 para no ser pobre: S/ 1 848.</p>
+  </div></div>
+  <div class="card">
+    <div class="chart-box"><canvas id="chIngreso"></canvas></div>
+    <div class="chart-cap">
+      <i><span class="sw" style="background:var(--accent)"></span> Cubre la canasta familiar</i>
+      <i><span class="sw" style="background:var(--danger)"></span> Por debajo del umbral</i>
+      <i><span class="sw" style="background:var(--warn)"></span> Línea de pobreza (familia de 4)</i>
+    </div>
+    <div class="note">La cifra de Lima usa el dato oficial del INEI (EPENE, ~S/ 2 172 en 2025).
+      El valor de S/ 2 486 que circula no aparece en los reportes del INEI.</div>
+  </div>
+</div></section>
+
+<!-- 02 CALCULADORA FAMILIA -->
+<section class="block" id="familia"><div class="wrap">
+  <div class="sec-head"><span class="sec-num">02</span><div>
+    <h2>Calculadora: ¿tu hogar supera la línea de pobreza?</h2>
+    <p class="sec-sub">Ajusta integrantes, número de ingresos y monto por ingreso. Se compara con
+      la canasta básica del INEI (S/ 462 por persona).</p>
+  </div></div>
+  <div class="card calc">
+    <div>
+      <label>Integrantes del hogar</label>
+      <div class="rowc"><input type="range" id="cMiembros" min="1" max="8" value="4" /><span class="pill" id="vMiembros">4</span></div>
+      <label>N.º de personas que aportan ingreso</label>
+      <div class="rowc"><input type="range" id="cIngresos" min="1" max="4" value="1" /><span class="pill" id="vIngresos">1</span></div>
+      <label>Monto por cada ingreso</label>
+      <div class="rowc"><input type="range" id="cMonto" min="500" max="4000" step="50" value="1200" /><span class="pill" id="vMonto">S/ 1 200</span></div>
+      <div class="mini"><span>Línea de pobreza del hogar</span><b id="mLinea">—</b></div>
+      <div class="mini"><span>Ingreso total del hogar</span><b id="mTotal">—</b></div>
+      <div class="mini"><span>Ingreso per cápita</span><b id="mPercap">—</b></div>
+    </div>
+    <div class="verdict ok" id="verBox">
+      <div class="lab" id="verLab">—</div>
+      <div class="big" id="verBig">—</div>
+      <div class="exp" id="verExp">—</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 03 REGIONES / MAPA -->
+<section class="block" id="regiones"><div class="wrap">
+  <div class="sec-head"><span class="sec-num">03</span><div>
+    <h2>Mapa: regiones más caras y más pobres</h2>
+    <p class="sec-sub">Costo de vida por región (índice referencial según dominios geográficos del
+      INEI) e incidencia de pobreza por departamento (INEI 2024). Haz clic en cada punto.</p>
+  </div></div>
+  <div class="toggle-row">
+    <button class="tgl active" data-modo="costo">💰 Costo de vida</button>
+    <button class="tgl" data-modo="pobreza">📉 Pobreza</button>
+  </div>
+  <div id="map"></div>
+  <div class="legend" id="legendCosto">
+    <i><span class="sw" style="background:#7a1f1a"></span> Muy alto (Lima, Callao)</i>
+    <i><span class="sw" style="background:#b1362f"></span> Alto (costa/sur)</i>
+    <i><span class="sw" style="background:#b5761a"></span> Medio</i>
+    <i><span class="sw" style="background:#0f7a63"></span> Bajo (sierra rural)</i>
+  </div>
+  <div class="legend" id="legendPob" style="display:none">
+    <i><span class="sw" style="background:#7a1f1a"></span> ≥ 40%</i>
+    <i><span class="sw" style="background:#b1362f"></span> 30–40%</i>
+    <i><span class="sw" style="background:#b5761a"></span> 20–30%</i>
+    <i><span class="sw" style="background:#0f7a63"></span> &lt; 20%</i>
+  </div>
+  <div class="note">El INEI no publica un precio de canasta uniforme por departamento; el "costo de
+    vida" es una clasificación referencial por dominio geográfico (Lima y la costa/sur tienen la
+    canasta más cara; la sierra rural, la más barata). La incidencia de pobreza es referencial
+    (INEI 2024, reportada en rangos).</div>
+</div></section>
+
+<!-- 04 POBREZA -->
+<section class="block" id="pobreza"><div class="wrap">
+  <div class="sec-head"><span class="sec-num">04</span><div>
+    <h2>Pobreza y vulnerabilidad · 2025</h2>
+    <p class="sec-sub">Distribución de la población según su capacidad de cubrir la canasta básica.</p>
+  </div></div>
+  <div class="grid2">
+    <div class="card"><div class="chart-box"><canvas id="chPobreza"></canvas></div></div>
+    <div class="card" style="display:flex;flex-direction:column;justify-content:center;gap:16px">
+      <div class="mini" style="border:none"><span>Pobreza monetaria 2025</span><b>25,7% <span style="color:var(--accent)">▼</span></b></div>
+      <div class="mini"><span>Pobreza extrema (canasta de alimentos)</span><b>4,7% · 1,6 M</b></div>
+      <div class="mini"><span>Población vulnerable (puede recaer)</span><b>32,8%</b></div>
+      <div class="mini"><span>Canasta de alimentos por persona</span><b>S/ 260</b></div>
+      <div class="mini"><span>Alza acumulada de la canasta (5 años)</span><b>+36%</b></div>
+      <p class="sec-sub" style="margin-top:4px">1 de cada 3 peruanos vive al filo: cubre la canasta
+        hoy, pero podría caer en pobreza ante una crisis, pérdida de empleo o problema de salud.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- 05 FAQ -->
+<section class="block" id="faq"><div class="wrap">
+  <div class="sec-head"><span class="sec-num">05</span><div>
+    <h2>Preguntas frecuentes</h2>
+    <p class="sec-sub">¿Dudas rápidas? Pregúntale también al bot Inti (abajo a la derecha).</p>
+  </div></div>
+  <div class="faq" id="faqList"></div>
+</div></section>
+
+<!-- FUENTES -->
+<section class="block" id="fuentes"><div class="wrap">
+  <div class="sec-head"><span class="sec-num">06</span><div><h2>Fuentes oficiales</h2></div></div>
+  <div class="card sources"><ul>
+    <li><a href="https://m.inei.gob.pe/estadisticas/indice-tematico/ingreso-promedio-proveniente-del-trabajo-14708/">INEI — Ingreso Promedio del Trabajo</a></li>
+    <li><a href="https://www.gob.pe/institucion/inei/campa%C3%B1as/92656-censos-nacionales-2025-xiii-de-poblacion-viii-de-vivienda-y-iv-de-comunidades">INEI — Censos Nacionales 2025</a></li>
+    <li><a href="https://www.gob.pe/institucion/inei/noticias/1387366-inei-pobreza-monetaria-alcanzo-al-25-7-de-la-poblacion-en-el-peru-durante-el-ano-2025">INEI — Pobreza monetaria 2025 (25,7%)</a></li>
+    <li><a href="https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/pobreza2022/Pobreza2022.pdf">INEI — Metodología de líneas de pobreza</a></li>
+    <li><a href="https://forbes.pe/economia-y-finanzas/2025-07-16/ingreso-salarial-promedio-en-lima-crecio-91-en-el-segundo-trimestre-de-2025-segun-inei">Forbes Perú — Ingreso Lima EPENE 2025</a></li>
+    <li><a href="https://censos2025.inei.gob.pe/">INEI — Plataforma Censos 2025</a></li>
+  </ul></div>
+</div></section>
+
+<footer><div class="wrap">
+  <div style="font-weight:700;color:var(--ink-soft);margin-bottom:4px">Explora más dashboards</div>
+  <div class="eco">
+    <a href="#" data-eco="salarios">📊 Salarios Perú</a>
+    <a href="#" data-eco="finanzas">💵 Finanzas públicas</a>
+    <a href="#" data-eco="seguridad">🛡️ Seguridad ciudadana</a>
+    <a href="#" data-eco="separaciones">⚖️ Separaciones/OAF</a>
+  </div>
+  <p>Datos: <b>INEI</b> — ENAHO, Censos Nacionales 2025, EPENE. Cifras nominales, sin ajuste por
+    inflación. El ingreso nacional/urbano/rural proviene de la ENAHO (anual) y el de Lima de la
+    EPENE (trimestral), por lo que no son estrictamente comparables. Actualizado: <span id="upd"></span>.</p>
+  <p>Hecho por Carlos Mauro Cárdenas · © <span id="year"></span> · Uso informativo. Verifica siempre
+    en las fuentes oficiales enlazadas.</p>
+</div></footer>
+
+<!-- BOT -->
+<button id="botfab" aria-label="Abrir asistente">🌞</button>
+<div id="botwin" role="dialog" aria-label="Asistente Inti">
+  <div class="bot-head">
+    <span class="av">🌞</span>
+    <div><h4>Inti</h4><p>Asistente de ingresos y costo de vida · INEI</p></div>
+    <button class="x" id="botClose" aria-label="Cerrar">×</button>
+  </div>
+  <div class="bot-body" id="botBody"></div>
+  <div class="chips" id="botChips"></div>
+  <div class="bot-cfg" id="botCfg"></div>
+  <div class="bot-foot">
+    <input id="botInput" type="text" placeholder="Escribe tu pregunta…" autocomplete="off" />
+    <button id="botSend" aria-label="Enviar">➤</button>
+  </div>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/dashboard.js" defer></script>
+<script src="assets/bot.js" defer></script>
+</body>
+</html>
