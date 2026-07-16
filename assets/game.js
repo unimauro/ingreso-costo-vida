@@ -30,14 +30,13 @@
   const els = {
     medal: $("medal"), svg: $("medalSvg"), emoji: $("medalEmoji"),
     title: $("medalTitle"), sub: $("medalSub"),
-    chkP: $("chkPersonal"), chkF: $("chkFamilia"),
     hint: $("gameHint"), shareRow: $("shareRow"),
     wsp: $("shWsp"), fb: $("shFb"), x: $("shX"), copy: $("shCopy"), dl: $("shDl"),
     name: $("gName"), email: $("gEmail"), send: $("gSend"), optin: $("gOptin"),
   };
   if (!els.medal) return;
 
-  let doneP = false, doneF = false, wasGana = false, unlocked = false;
+  let wasGana = false, unlocked = false;
   let current = null;
 
   function tierOf(st) {
@@ -84,19 +83,10 @@
     track("medalla_desbloqueada", { nivel: key });
   }
 
-  function markCheck(el, which) {
-    if (which === "P") doneP = true; else doneF = true;
-    el.classList.add("done");
-    if (doneP && doneF) unlock();
-  }
-
-  // los pasos se completan al usar la calculadora (o al hacer clic)
+  // se desbloquea al mover cualquier control de la calculadora
   const cMonto = $("cMonto"), cMiembros = $("cMiembros"), cIngresos = $("cIngresos");
-  cMonto && cMonto.addEventListener("input", () => markCheck(els.chkP, "P"), { once: true });
-  cIngresos && cIngresos.addEventListener("input", () => markCheck(els.chkP, "P"), { once: true });
-  cMiembros && cMiembros.addEventListener("input", () => markCheck(els.chkF, "F"), { once: true });
-  els.chkP.addEventListener("click", () => markCheck(els.chkP, "P"));
-  els.chkF.addEventListener("click", () => markCheck(els.chkF, "F"));
+  const onFirstUse = () => { if (!unlocked) unlock(); };
+  [cMonto, cMiembros, cIngresos].forEach((el) => el && el.addEventListener("input", onFirstUse));
 
   document.addEventListener("calc:update", () => { if (unlocked) { paint(); setShareLinks(); const k = tierOf(window.__calcState); if (k === "gana" && !wasGana) confetti(); wasGana = k === "gana"; } });
   els.name.addEventListener("input", () => { if (unlocked) paint(); });

@@ -43,7 +43,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Instrument+Sans:wght@400;500;600;700&display=swap" />
-<link rel="stylesheet" href="assets/styles.css?v=4" />
+<link rel="stylesheet" href="assets/styles.css?v=5" />
 
 <!-- Datos estructurados -->
 <script type="application/ld+json">
@@ -172,40 +172,28 @@
       <div class="exp" id="verExp">—</div>
     </div>
   </div>
-</div></section>
 
-<!-- RETO: GÁNALE A LA POBREZA -->
-<section class="block" id="reto"><div class="wrap">
-  <div class="sec-head"><span class="sec-num">🏅</span><div>
-    <h2>El reto: gánale a la pobreza 🇵🇪</h2>
-    <p class="sec-sub">Evalúa tu ingreso personal y el de tu familia con la calculadora de arriba.
-      Completa los dos pasos, gana tu medalla andina y compártela.</p>
-  </div></div>
-  <div class="game"><div class="game-grid">
+  <!-- Gracias por simular → medalla + compartir (mismo bloque) -->
+  <div id="reto" class="game" style="margin-top:20px"><div class="game-grid">
     <div class="medal-stage">
       <div class="medal" id="medal">
         <svg viewBox="0 0 100 100" id="medalSvg"><use href="#chakana"/></svg>
         <span class="emoji" id="medalEmoji">🎗️</span>
       </div>
       <div class="medal-title" id="medalTitle">Tu medalla te espera</div>
-      <div class="medal-sub" id="medalSub">Usa la calculadora y marca los dos pasos para descubrir tu nivel.</div>
+      <div class="medal-sub" id="medalSub">Mueve la calculadora de arriba y descubre tu nivel.</div>
     </div>
     <div class="game-cta">
-      <div class="checks">
-        <div class="check" id="chkPersonal"><span class="box">✓</span> Evalué mi ingreso personal</div>
-        <div class="check" id="chkFamilia"><span class="box">✓</span> Evalué el ingreso de mi familia</div>
+      <h3 id="gameH">🎉 ¡Gracias por simular!</h3>
+      <p class="lead" id="gameLead">¿Compartes tu resultado en tus redes? Déjanos tu nombre (y correo, opcional)
+        y llévate tu medalla andina 🏅</p>
+      <div class="mailrow">
+        <input type="text" id="gName" placeholder="Tu nombre" autocomplete="name" />
+        <input type="email" id="gEmail" placeholder="Tu correo (opcional)" autocomplete="email" />
+        <button id="gSend">Enviar</button>
       </div>
-      <div id="gameForm">
-        <h3>Recibe tu medalla 🏅</h3>
-        <p class="lead">Déjanos tu nombre y correo (opcional) y comparte tu resultado.</p>
-        <div class="mailrow">
-          <input type="text" id="gName" placeholder="Tu nombre" autocomplete="name" />
-          <input type="email" id="gEmail" placeholder="Tu correo (opcional)" autocomplete="email" />
-          <button id="gSend">Enviar</button>
-        </div>
-        <label class="optin"><input type="checkbox" id="gOptin" checked />
-          Quiero recibir mi medalla y datos del INEI por correo. Tus datos no se comparten con terceros.</label>
-      </div>
+      <label class="optin"><input type="checkbox" id="gOptin" checked />
+        Quiero recibir mi medalla y datos del INEI por correo. Tus datos no se comparten con terceros.</label>
       <div class="share-row" id="shareRow">
         <a class="share wsp" id="shWsp" target="_blank" rel="noopener">🟢 WhatsApp</a>
         <a class="share fb" id="shFb" target="_blank" rel="noopener">📘 Facebook</a>
@@ -213,7 +201,7 @@
         <button class="share cp" id="shCopy">🔗 Copiar enlace</button>
         <button class="share dl" id="shDl">⬇️ Descargar medalla</button>
       </div>
-      <div class="hint" id="gameHint">👆 Completa los dos pasos para desbloquear tu medalla y compartir.</div>
+      <div class="hint" id="gameHint">👆 Mueve la calculadora para desbloquear tu medalla y compartir.</div>
     </div>
   </div></div>
 </div></section>
@@ -377,9 +365,9 @@
   </div>
 </div>
 
-<script src="assets/data.js?v=4"></script>
-<script src="assets/dashboard.js?v=4" defer></script>
-<script src="assets/game.js?v=4" defer></script>
-<script src="assets/bot.js?v=4" defer></script>
+<script src="assets/data.js?v=5"></script>
+<script src="assets/dashboard.js?v=5" defer></script>
+<script src="assets/game.js?v=5" defer></script>
+<script src="assets/bot.js?v=5" defer></script>
 </body>
 </html>
