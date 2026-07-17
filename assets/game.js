@@ -32,7 +32,7 @@
     title: $("medalTitle"), sub: $("medalSub"),
     hint: $("gameHint"), shareRow: $("shareRow"),
     wsp: $("shWsp"), fb: $("shFb"), x: $("shX"), copy: $("shCopy"), dl: $("shDl"),
-    name: $("gName"), email: $("gEmail"), send: $("gSend"), optin: $("gOptin"),
+    name: $("gName"), email: $("gEmail"), send: $("gSend"), optin: $("gOptin"), hp: $("gWebsite"),
   };
   if (!els.medal) return;
 
@@ -110,9 +110,13 @@
     if (!name) { els.name.focus(); els.name.placeholder = "Escribe tu nombre 👀"; return; }
     if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { els.email.focus(); alert("Revisa tu correo, parece inválido."); return; }
     if (!unlocked) { alert("Primero completa los dos pasos con la calculadora 🙂"); return; }
+    const st = window.__calcState || {};
     const payload = {
       nombre: name, correo: email, optin: els.optin.checked,
-      nivel: current, percap: Math.round((window.__calcState || {}).percap || 0),
+      nivel: (st.nse ? "NSE " + st.nse : current), nse: st.nse || "",
+      pct: st.pct != null ? String(st.pct) : "",
+      percap: Math.round(st.percap || 0),
+      website: (els.hp && els.hp.value) || "", // honeypot anti-bot (debe ir vacío)
       fuente: "ingreso-costo-vida",
     };
     try { localStorage.setItem("medalla_lead", JSON.stringify(payload)); } catch (e) {}
