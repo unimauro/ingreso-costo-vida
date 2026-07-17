@@ -187,13 +187,21 @@
     g.font = "90px serif"; g.textAlign = "center"; g.fillText(t.emoji, S / 2, 250);
     // textos
     const name = (els.name.value || "").trim();
-    g.fillStyle = "#2b2015"; g.font = "700 40px Georgia, serif";
-    g.fillText(t.title, S / 2, 430);
-    if (name) { g.font = "italic 26px Georgia, serif"; g.fillStyle = "#5e5142"; g.fillText(name, S / 2, 470); }
-    g.font = "600 20px Arial"; g.fillStyle = "#a2541f";
-    g.fillText("Reto: Gánale a la pobreza 🇵🇪 · INEI 2025", S / 2, 540);
-    g.font = "16px Arial"; g.fillStyle = "#8c7e6b";
-    g.fillText("unimauro.github.io/ingreso-costo-vida", S / 2, 575);
+    const st = window.__calcState;
+    g.fillStyle = "#2b2015"; g.font = "700 38px Georgia, serif";
+    g.fillText(t.title, S / 2, 420);
+    if (name) { g.font = "italic 25px Georgia, serif"; g.fillStyle = "#5e5142"; g.fillText(name, S / 2, 458); }
+    // badge NSE + percentil
+    if (st && st.pct != null) {
+      g.font = "700 22px Arial"; g.fillStyle = t.color;
+      g.fillText("NSE " + st.nse + " · " + st.nseNombre, S / 2, 500);
+      g.font = "18px Arial"; g.fillStyle = "#5e5142";
+      g.fillText("Supera al " + st.pct + "% de los peruanos por ingreso", S / 2, 528);
+    }
+    g.font = "600 19px Arial"; g.fillStyle = "#a2541f";
+    g.fillText("Reto: Gánale a la pobreza 🇵🇪 · INEI 2025", S / 2, 565);
+    g.font = "15px Arial"; g.fillStyle = "#8c7e6b";
+    g.fillText("unimauro.github.io/ingreso-costo-vida", S / 2, 595);
     const a = document.createElement("a");
     a.download = "medalla-ganale-a-la-pobreza.png"; a.href = cv.toDataURL("image/png"); a.click();
     track("medalla_descarga", { nivel: current });
