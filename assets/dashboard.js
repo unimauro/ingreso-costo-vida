@@ -218,12 +218,12 @@ function calculadora() {
     nseNote: document.getElementById("mNseNote"),
   };
   // Escala NSE de menor a mayor (E … A++), generada desde los datos
-  if (els.nseScale && !els.nseScale.children.length) {
-    els.nseScale.style.gridTemplateColumns = "repeat(" + DATA.nse.length + ",1fr)";
+  if (out.nseScale && !out.nseScale.children.length) {
+    out.nseScale.style.gridTemplateColumns = "repeat(" + DATA.nse.length + ",1fr)";
     [...DATA.nse].reverse().forEach((n) => {
       const s = document.createElement("span");
       s.dataset.k = n.k; s.textContent = n.k;
-      els.nseScale.appendChild(s);
+      out.nseScale.appendChild(s);
     });
   }
   // Nivel socioeconómico según ingreso total del hogar (primero cuyo umbral cumple)
