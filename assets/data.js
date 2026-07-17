@@ -60,17 +60,18 @@ const DATA = {
     mayor60_1940: 6.4, mayor60_2017: 11.9,
   },
 
-  // --- Niveles socioeconómicos por ingreso TOTAL del hogar (S/ / mes) ---
-  // Base APEIM (A–E); A+ y A++ son extensiones para diferenciar ingresos muy altos.
-  // Orden de mayor a menor umbral (para elegir el primero que cumple).
+  // --- Nivel socioeconómico por ingreso POR PERSONA (S/ per cápita / mes) ---
+  // Se calcula con el ingreso por persona para que sea coherente con el percentil
+  // (un soltero y una familia grande con el mismo total NO dan el mismo nivel).
+  // Escala tipo NSE (A–E) + A+/A++ para los más altos. Anclada a los deciles del INEI.
   nse: [
-    { k: "A++", nombre: "Élite",       min: 35000, desc: "top ~0,1% de hogares" },
-    { k: "A+",  nombre: "Muy alto",    min: 20000, desc: "top ~0,5% de hogares" },
-    { k: "A",   nombre: "Alto",        min: 12000, desc: "≈ 1% de los hogares" },
-    { k: "B",   nombre: "Medio alto",  min: 7000,  desc: "≈ 11% de los hogares" },
-    { k: "C",   nombre: "Medio",       min: 3600,  desc: "≈ 30% de los hogares" },
-    { k: "D",   nombre: "Medio bajo",  min: 2000,  desc: "≈ 33% de los hogares" },
-    { k: "E",   nombre: "Bajo",        min: 0,     desc: "≈ 25% de los hogares" },
+    { k: "A++", nombre: "Top del país", min: 7000, desc: "ingreso por persona altísimo" },
+    { k: "A+",  nombre: "Muy alto",     min: 3805, desc: "≈ top 5% por persona" },
+    { k: "A",   nombre: "Alto",         min: 2000, desc: "≈ top 15% por persona" },
+    { k: "B",   nombre: "Medio alto",   min: 1235, desc: "por encima de la media" },
+    { k: "C",   nombre: "Medio",        min: 730,  desc: "alrededor de la media" },
+    { k: "D",   nombre: "Medio bajo",   min: 462,  desc: "cubre la canasta, ajustado" },
+    { k: "E",   nombre: "Bajo",         min: 0,    desc: "bajo la canasta básica" },
   ],
 
   // --- Distribución del ingreso per cápita por decil (INEI/ENAHO, S/ / mes) ---
@@ -197,14 +198,19 @@ const FAQ = [
     tags: ["regiones", "pobreza", "cajamarca", "loreto", "ica", "departamento", "mapa"],
   },
   {
-    q: "¿Qué nivel socioeconómico (NSE A, B, C, D, E) tengo?",
-    a: "Según APEIM (con datos de la ENAHO), los niveles por ingreso familiar mensual son aproximadamente: NSE A ≥ S/ 12 000 (≈1% de hogares); NSE B S/ 7 000–12 000 (≈11%); NSE C S/ 3 600–7 000 (≈30%); NSE D S/ 2 000–3 600 (≈33%); NSE E < S/ 2 000 (≈25%). Usa la calculadora: al ingresar el ingreso total del hogar te muestra tu NSE estimado.",
-    tags: ["nse", "nivel socioeconomico", "a b c d e", "apeim", "clase", "estrato"],
+    q: "¿Qué nivel socioeconómico (A, B, C, D, E) tengo?",
+    a: "La calculadora usa tu ingreso POR PERSONA (el total del hogar ÷ integrantes) y lo ubica en una escala tipo NSE: E bajo, D medio bajo, C medio, B medio alto, A alto, A+ muy alto y A++ top del país. Se calcula por persona —y no por el total del hogar— porque un soltero con S/ 3 900 y una familia de 8 con S/ 3 900 tienen niveles de vida muy distintos.",
+    tags: ["nse", "nivel socioeconomico", "a b c d e", "apeim", "clase", "estrato", "soltero"],
   },
   {
     q: "¿A cuántos peruanos les gano por ingreso?",
-    a: "La calculadora estima tu percentil según el ingreso per cápita del hogar, usando la distribución por deciles del INEI. Por ejemplo, un ingreso per cápita de ~S/ 1 000 supera a cerca del 55% de la población; ~S/ 2 000 supera a más del 85%. El decil más alto (10% más rico) promedia S/ 3 805 per cápita.",
+    a: "La calculadora estima tu percentil según el ingreso POR PERSONA, usando la distribución por deciles del INEI/ENAHO. Ejemplos: ~S/ 1 000 por persona supera a cerca del 53%; ~S/ 2 000 supera a ~85%; y a partir de ~S/ 3 800 ya estás en el 10% más rico del país (el decil más alto promedia S/ 3 805 por persona). Arriba de eso el porcentaje sube despacio porque la encuesta no distingue bien dentro del grupo más rico.",
     tags: ["percentil", "cuantos", "gano", "supero", "deciles", "top", "poblacion", "85%"],
+  },
+  {
+    q: "¿Por qué se calcula por persona y no por el total del hogar? (metodología)",
+    a: "Porque comparar el total del hogar sin dividir entre sus miembros es engañoso: S/ 3 900 le rinden muchísimo a una persona sola, pero muy poco a una familia de 8. Por eso el propio INEI mide la pobreza y el bienestar con el ingreso (y gasto) POR PERSONA del hogar, y la canasta básica se define por persona (S/ 462). Es el mismo criterio de 'ingreso per cápita del hogar' que usan el INEI y el Banco Mundial. Nota: los NSE de APEIM se calculan distinto (con bienes y educación del hogar, no solo ingreso), por eso aquí es una estimación propia por ingreso por persona, no el NSE oficial de APEIM.",
+    tags: ["metodologia", "por que", "per capita", "por persona", "modelo", "referencia", "como se calcula", "apeim"],
   },
   {
     q: "¿De dónde salen estos datos?",

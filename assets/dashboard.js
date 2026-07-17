@@ -226,9 +226,9 @@ function calculadora() {
       out.nseScale.appendChild(s);
     });
   }
-  // Nivel socioeconómico según ingreso total del hogar (primero cuyo umbral cumple)
-  const nseDe = (total) => DATA.nse.find((n) => total >= n.min) || DATA.nse[DATA.nse.length - 1];
-  // Percentil estimado según ingreso per cápita (deciles INEI)
+  // Nivel socioeconómico según ingreso POR PERSONA (primero cuyo umbral cumple)
+  const nseDe = (percap) => DATA.nse.find((n) => percap >= n.min) || DATA.nse[DATA.nse.length - 1];
+  // Percentil estimado según ingreso por persona (deciles INEI); tope suavizado
   const percentilPC = (x) => {
     const pts = DATA.deciles_pc;
     if (x <= pts[0].s) return Math.max(1, Math.round((pts[0].p * x) / pts[0].s));
@@ -236,7 +236,9 @@ function calculadora() {
       const a = pts[i], b = pts[i + 1];
       if (x <= b.s) return Math.round(a.p + ((b.p - a.p) * (x - a.s)) / (b.s - a.s));
     }
-    return Math.min(99, Math.round(pts[pts.length - 1].p + (4 * x) / pts[pts.length - 1].s));
+    // por encima del promedio del decil más alto: sube gradualmente de 95 a 99
+    const top = pts[pts.length - 1];
+    return Math.min(99, Math.round(top.p + (4 * (x - top.s)) / (20000 - top.s)));
   };
   function render() {
     const m = +rMiembros.value, monto = +rMonto.value;
@@ -253,10 +255,10 @@ function calculadora() {
     out.linea.textContent = soles(linea);
     out.total.textContent = soles(total);
     out.percap.textContent = soles(percap);
-    // Percentil (por persona) y NSE (por hogar)
+    // Percentil y NSE, ambos por ingreso por persona (coherentes entre sí)
     const pct = percentilPC(percap);
     out.percentil.innerHTML = pct + "% de las personas 🇵🇪";
-    const nse = nseDe(total);
+    const nse = nseDe(percap);
     out.nse.textContent = "NSE " + nse.k + " · " + nse.nombre;
     if (out.nseNote) out.nseNote.textContent = nse.desc;
     if (out.nseScale)

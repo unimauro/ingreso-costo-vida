@@ -43,7 +43,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Instrument+Sans:wght@400;500;600;700&display=swap" />
-<link rel="stylesheet" href="assets/styles.css?v=9" />
+<link rel="stylesheet" href="assets/styles.css?v=10" />
 
 <!-- Datos estructurados -->
 <script type="application/ld+json">
@@ -151,9 +151,10 @@
 <section class="block" id="familia"><div class="wrap">
   <div class="sec-head"><span class="sec-num">02</span><div>
     <h2>Calculadora: ¿tu hogar supera la línea de pobreza?</h2>
-    <p class="sec-sub">Ajusta integrantes, cuántos aportan y cuánto gana cada uno. Verás dos cosas:
-      el <b>nivel del hogar</b> (NSE, según el ingreso total) y a <b>cuántos peruanos supera cada
-      persona</b> del hogar (según el ingreso por persona). Base: INEI/ENAHO y APEIM.</p>
+    <p class="sec-sub">Ajusta integrantes, cuántos aportan y cuánto gana cada uno. Todo se calcula con
+      el <b>ingreso por persona</b> (el total ÷ integrantes): a <b>cuántos peruanos supera cada
+      persona</b> del hogar y su <b>nivel socioeconómico</b>. Así un soltero y una familia grande con
+      el mismo total no dan lo mismo. Base: INEI/ENAHO. Ver la nota metodológica en el <a href="#faq">FAQ</a>.</p>
   </div></div>
   <div class="card calc">
     <div>
@@ -174,7 +175,7 @@
         <div class="mini"><span>Con eso, cada uno supera al…</span><b id="mPercentil">—</b></div>
       </div>
       <div class="nse-wrap">
-        <div class="nse-head"><span>Nivel del hogar <em>(por el ingreso total)</em></span><b id="mNse">—</b></div>
+        <div class="nse-head"><span>Nivel socioeconómico <em>(por ingreso por persona)</em></span><b id="mNse">—</b></div>
         <div class="nse-scale" id="nseScale" aria-hidden="true"></div>
         <div class="nse-note" id="mNseNote">—</div>
       </div>
@@ -330,7 +331,16 @@
     <li><a href="https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/pobreza2022/Pobreza2022.pdf">INEI — Metodología de líneas de pobreza</a></li>
     <li><a href="https://forbes.pe/economia-y-finanzas/2025-07-16/ingreso-salarial-promedio-en-lima-crecio-91-en-el-segundo-trimestre-de-2025-segun-inei">Forbes Perú — Ingreso Lima EPENE 2025</a></li>
     <li><a href="https://censos2025.inei.gob.pe/">INEI — Plataforma Censos 2025</a></li>
-  </ul></div>
+    <li><a href="https://www.infobae.com/peru/2026/05/09/cuantos-peruanos-ganan-mas-y-menos-que-tu-segun-tu-sueldo-y-otros-ingresos/">INEI/ENAHO — Ingreso por decil (percentiles)</a></li>
+    <li><a href="https://apeim.com.pe/informes-resumen/">APEIM — Niveles Socioeconómicos (metodología)</a></li>
+  </ul>
+  <div class="note">Nota metodológica: el nivel socioeconómico y el percentil se calculan con el
+    <b>ingreso por persona</b> (ingreso del hogar ÷ integrantes), el mismo criterio "per cápita" con
+    que el INEI mide pobreza y bienestar y con que se define la canasta básica (S/ 462 por persona).
+    Comparar solo el total del hogar sería engañoso (no rinde igual para 1 que para 8 personas). Los
+    tramos A–E son una estimación propia anclada a los deciles de la ENAHO; el NSE oficial de APEIM
+    se calcula distinto (bienes y educación del hogar, no solo ingreso).</div>
+  </div>
 </div></section>
 
 <footer><div class="wrap">
@@ -378,9 +388,9 @@
   </div>
 </div>
 
-<script src="assets/data.js?v=9"></script>
-<script src="assets/dashboard.js?v=9" defer></script>
-<script src="assets/game.js?v=9" defer></script>
-<script src="assets/bot.js?v=9" defer></script>
+<script src="assets/data.js?v=10"></script>
+<script src="assets/dashboard.js?v=10" defer></script>
+<script src="assets/game.js?v=10" defer></script>
+<script src="assets/bot.js?v=10" defer></script>
 </body>
 </html>
