@@ -150,6 +150,14 @@ input[type=range]{flex:1;accent-color:var(--accent);height:6px}
 .verdict .exp{font-size:13.5px;color:var(--ink-soft)}
 .mini{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-top:1px solid var(--line)}
 .mini b{font-family:var(--mono)}
+.nse-wrap{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.nse-head{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:8px}
+.nse-head span{color:var(--ink-soft)}
+.nse-head b{font-family:var(--serif);font-size:16px;color:var(--rojo)}
+.nse-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.nse-scale span{text-align:center;padding:7px 0;border-radius:8px;font-weight:800;font-size:13px;
+  background:var(--surface-2);color:var(--ink-faint);border:1.5px solid transparent;transition:.15s}
+.nse-scale span.on{background:var(--rojo);color:#fff;border-color:var(--rojo);transform:scale(1.06)}
 
 /* ---------- mapa ---------- */
 #map{height:460px;border-radius:var(--radius);border:1px solid var(--line);z-index:1}

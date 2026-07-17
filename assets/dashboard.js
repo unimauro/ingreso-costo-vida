@@ -212,6 +212,21 @@ function calculadora() {
     linea: document.getElementById("mLinea"),
     total: document.getElementById("mTotal"),
     percap: document.getElementById("mPercap"),
+    percentil: document.getElementById("mPercentil"),
+    nse: document.getElementById("mNse"),
+    nseScale: document.getElementById("nseScale"),
+  };
+  // Nivel socioeconómico según ingreso total del hogar (APEIM)
+  const nseDe = (total) => DATA.nse.find((n) => total >= n.min) || DATA.nse[DATA.nse.length - 1];
+  // Percentil estimado según ingreso per cápita (deciles INEI)
+  const percentilPC = (x) => {
+    const pts = DATA.deciles_pc;
+    if (x <= pts[0].s) return Math.max(1, Math.round((pts[0].p * x) / pts[0].s));
+    for (let i = 0; i < pts.length - 1; i++) {
+      const a = pts[i], b = pts[i + 1];
+      if (x <= b.s) return Math.round(a.p + ((b.p - a.p) * (x - a.s)) / (b.s - a.s));
+    }
+    return Math.min(99, Math.round(pts[pts.length - 1].p + (4 * x) / pts[pts.length - 1].s));
   };
   function render() {
     const m = +rMiembros.value, ing = +rIngresos.value, monto = +rMonto.value;
@@ -225,6 +240,13 @@ function calculadora() {
     out.linea.textContent = soles(linea);
     out.total.textContent = soles(total);
     out.percap.textContent = soles(percap);
+    // Percentil y NSE
+    const pct = percentilPC(percap);
+    out.percentil.innerHTML = pct + "% de la población 🇵🇪";
+    const nse = nseDe(total);
+    out.nse.textContent = "NSE " + nse.k + " · " + nse.nombre;
+    if (out.nseScale)
+      [...out.nseScale.children].forEach((el) => el.classList.toggle("on", el.dataset.k === nse.k));
     let lab, big, exp, cls;
     if (percap < DATA.pobreza.canasta_alim_pc) {
       cls = "bad"; lab = "Pobreza extrema";
@@ -246,6 +268,7 @@ function calculadora() {
       miembros: m, ingresos: ing, monto, total, linea, percap,
       over: percap >= DATA.pobreza.canasta_consumo_pc,
       extreme: percap < DATA.pobreza.canasta_alim_pc,
+      pct, nse: nse.k, nseNombre: nse.nombre,
     };
     document.dispatchEvent(new CustomEvent("calc:update", { detail: window.__calcState }));
   }

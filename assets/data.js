@@ -60,6 +60,24 @@ const DATA = {
     mayor60_1940: 6.4, mayor60_2017: 11.9,
   },
 
+  // --- Niveles socioeconómicos (APEIM 2023–2024), por ingreso familiar mensual ---
+  // Umbrales referenciales del ingreso TOTAL del hogar (S/ / mes).
+  nse: [
+    { k: "A", nombre: "Alto",       min: 12000, desc: "≈ 1% de los hogares" },
+    { k: "B", nombre: "Medio alto", min: 7000,  desc: "≈ 11% de los hogares" },
+    { k: "C", nombre: "Medio",      min: 3600,  desc: "≈ 30% de los hogares" },
+    { k: "D", nombre: "Medio bajo", min: 2000,  desc: "≈ 33% de los hogares" },
+    { k: "E", nombre: "Bajo",       min: 0,     desc: "≈ 25% de los hogares" },
+  ],
+
+  // --- Distribución del ingreso per cápita por decil (INEI/ENAHO, S/ / mes) ---
+  // Punto medio aproximado de cada decil → percentil, para estimar posición.
+  deciles_pc: [
+    { p: 5, s: 277 }, { p: 15, s: 459 }, { p: 25, s: 598 }, { p: 35, s: 730 },
+    { p: 45, s: 871 }, { p: 55, s: 1035 }, { p: 65, s: 1235 }, { p: 75, s: 1521 },
+    { p: 85, s: 1994 }, { p: 95, s: 3805 },
+  ],
+
   // --- Evolución poblacional por censo (INEI, millones) ---
   censos_hist: [
     { a: 1940, p: 7.0 }, { a: 1961, p: 10.4 }, { a: 1972, p: 14.1 },
@@ -174,6 +192,16 @@ const FAQ = [
     q: "¿Qué regiones tienen más pobreza?",
     a: "Según el INEI (2024), Cajamarca (≈45%) y Loreto (≈43%) tienen la mayor incidencia de pobreza monetaria. Las de menor pobreza son Ica (≈6%), Moquegua (≈11%) y Madre de Dios (≈11%). Lima Metropolitana está cerca del promedio nacional.",
     tags: ["regiones", "pobreza", "cajamarca", "loreto", "ica", "departamento", "mapa"],
+  },
+  {
+    q: "¿Qué nivel socioeconómico (NSE A, B, C, D, E) tengo?",
+    a: "Según APEIM (con datos de la ENAHO), los niveles por ingreso familiar mensual son aproximadamente: NSE A ≥ S/ 12 000 (≈1% de hogares); NSE B S/ 7 000–12 000 (≈11%); NSE C S/ 3 600–7 000 (≈30%); NSE D S/ 2 000–3 600 (≈33%); NSE E < S/ 2 000 (≈25%). Usa la calculadora: al ingresar el ingreso total del hogar te muestra tu NSE estimado.",
+    tags: ["nse", "nivel socioeconomico", "a b c d e", "apeim", "clase", "estrato"],
+  },
+  {
+    q: "¿A cuántos peruanos les gano por ingreso?",
+    a: "La calculadora estima tu percentil según el ingreso per cápita del hogar, usando la distribución por deciles del INEI. Por ejemplo, un ingreso per cápita de ~S/ 1 000 supera a cerca del 55% de la población; ~S/ 2 000 supera a más del 85%. El decil más alto (10% más rico) promedia S/ 3 805 per cápita.",
+    tags: ["percentil", "cuantos", "gano", "supero", "deciles", "top", "poblacion", "85%"],
   },
   {
     q: "¿De dónde salen estos datos?",

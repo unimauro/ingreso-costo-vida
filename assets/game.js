@@ -54,16 +54,17 @@
     if (unlocked) {
       const name = (els.name.value || "").trim();
       els.title.textContent = (name ? name + ", " : "") + t.title;
-      els.sub.innerHTML = t.msg + (st ? "<br><small>Ingreso per cápita del hogar: S/ " +
-        Math.round(st.percap).toLocaleString("es-PE") + " · línea: S/ " +
-        Math.round(st.linea).toLocaleString("es-PE") + "</small>" : "");
+      els.sub.innerHTML = t.msg + (st ? "<br><small>Superas al <b>" + st.pct +
+        "%</b> del Perú · Nivel <b>NSE " + st.nse + "</b> (" + st.nseNombre + ")</small>" : "");
     }
   }
 
   function setShareLinks() {
     const st = window.__calcState;
     const t = TIERS[tierOf(st)];
-    const text = t.share + " " + PAGE;
+    let extra = "";
+    if (st && st.pct != null) extra = " Mi hogar supera al " + st.pct + "% del Perú por ingreso (NSE " + st.nse + ").";
+    const text = t.share + extra + " " + PAGE;
     els.wsp.href = "https://wa.me/?text=" + encodeURIComponent(text);
     els.fb.href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(PAGE) +
       "&quote=" + encodeURIComponent(t.share);

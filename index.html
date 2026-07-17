@@ -43,7 +43,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Instrument+Sans:wght@400;500;600;700&display=swap" />
-<link rel="stylesheet" href="assets/styles.css?v=5" />
+<link rel="stylesheet" href="assets/styles.css?v=6" />
 
 <!-- Datos estructurados -->
 <script type="application/ld+json">
@@ -161,10 +161,17 @@
       <label>N.º de personas que aportan ingreso</label>
       <div class="rowc"><input type="range" id="cIngresos" min="1" max="4" value="1" /><span class="pill" id="vIngresos">1</span></div>
       <label>Monto por cada ingreso</label>
-      <div class="rowc"><input type="range" id="cMonto" min="500" max="4000" step="50" value="1200" /><span class="pill" id="vMonto">S/ 1 200</span></div>
+      <div class="rowc"><input type="range" id="cMonto" min="300" max="50000" step="100" value="1200" /><span class="pill" id="vMonto">S/ 1 200</span></div>
       <div class="mini"><span>Línea de pobreza del hogar</span><b id="mLinea">—</b></div>
       <div class="mini"><span>Ingreso total del hogar</span><b id="mTotal">—</b></div>
       <div class="mini"><span>Ingreso per cápita</span><b id="mPercap">—</b></div>
+      <div class="mini"><span>Superas (por ingreso) al…</span><b id="mPercentil">—</b></div>
+      <div class="nse-wrap">
+        <div class="nse-head"><span>Nivel socioeconómico (est. APEIM)</span><b id="mNse">—</b></div>
+        <div class="nse-scale" id="nseScale" aria-hidden="true">
+          <span data-k="E">E</span><span data-k="D">D</span><span data-k="C">C</span><span data-k="B">B</span><span data-k="A">A</span>
+        </div>
+      </div>
     </div>
     <div class="verdict ok" id="verBox">
       <div class="lab" id="verLab">—</div>
@@ -365,9 +372,9 @@
   </div>
 </div>
 
-<script src="assets/data.js?v=5"></script>
-<script src="assets/dashboard.js?v=5" defer></script>
-<script src="assets/game.js?v=5" defer></script>
-<script src="assets/bot.js?v=5" defer></script>
+<script src="assets/data.js?v=6"></script>
+<script src="assets/dashboard.js?v=6" defer></script>
+<script src="assets/game.js?v=6" defer></script>
+<script src="assets/bot.js?v=6" defer></script>
 </body>
 </html>
