@@ -43,7 +43,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Instrument+Sans:wght@400;500;600;700&display=swap" />
-<link rel="stylesheet" href="assets/styles.css?v=6" />
+<link rel="stylesheet" href="assets/styles.css?v=7" />
 
 <!-- Datos estructurados -->
 <script type="application/ld+json">
@@ -151,26 +151,32 @@
 <section class="block" id="familia"><div class="wrap">
   <div class="sec-head"><span class="sec-num">02</span><div>
     <h2>Calculadora: ¿tu hogar supera la línea de pobreza?</h2>
-    <p class="sec-sub">Ajusta integrantes, número de ingresos y monto por ingreso. Se compara con
-      la canasta básica del INEI (S/ 462 por persona).</p>
+    <p class="sec-sub">Ajusta integrantes, cuántos aportan y cuánto gana cada uno. Verás dos cosas:
+      el <b>nivel del hogar</b> (NSE, según el ingreso total) y a <b>cuántos peruanos supera cada
+      persona</b> del hogar (según el ingreso por persona). Base: INEI/ENAHO y APEIM.</p>
   </div></div>
   <div class="card calc">
     <div>
       <label>Integrantes del hogar</label>
-      <div class="rowc"><input type="range" id="cMiembros" min="1" max="8" value="4" /><span class="pill" id="vMiembros">4</span></div>
+      <div class="rowc"><input type="range" id="cMiembros" min="1" max="12" value="4" /><span class="pill" id="vMiembros">4</span></div>
       <label>N.º de personas que aportan ingreso</label>
-      <div class="rowc"><input type="range" id="cIngresos" min="1" max="4" value="1" /><span class="pill" id="vIngresos">1</span></div>
+      <div class="rowc"><input type="range" id="cIngresos" min="1" max="8" value="1" /><span class="pill" id="vIngresos">1</span></div>
       <label>Monto por cada ingreso</label>
       <div class="rowc"><input type="range" id="cMonto" min="300" max="50000" step="100" value="1200" /><span class="pill" id="vMonto">S/ 1 200</span></div>
-      <div class="mini"><span>Línea de pobreza del hogar</span><b id="mLinea">—</b></div>
-      <div class="mini"><span>Ingreso total del hogar</span><b id="mTotal">—</b></div>
-      <div class="mini"><span>Ingreso per cápita</span><b id="mPercap">—</b></div>
-      <div class="mini"><span>Superas (por ingreso) al…</span><b id="mPercentil">—</b></div>
+      <div class="res-group">
+        <div class="res-title">🏠 Tu hogar (todos juntos)</div>
+        <div class="mini"><span>Ingreso total del hogar</span><b id="mTotal">—</b></div>
+        <div class="mini"><span>Necesitan para no ser pobres (INEI)</span><b id="mLinea">—</b></div>
+      </div>
+      <div class="res-group">
+        <div class="res-title">🙋 Por persona <em>(el total ÷ integrantes)</em></div>
+        <div class="mini"><span>Le toca a cada integrante / mes</span><b id="mPercap">—</b></div>
+        <div class="mini"><span>Con eso, cada uno supera al…</span><b id="mPercentil">—</b></div>
+      </div>
       <div class="nse-wrap">
-        <div class="nse-head"><span>Nivel socioeconómico (est. APEIM)</span><b id="mNse">—</b></div>
-        <div class="nse-scale" id="nseScale" aria-hidden="true">
-          <span data-k="E">E</span><span data-k="D">D</span><span data-k="C">C</span><span data-k="B">B</span><span data-k="A">A</span>
-        </div>
+        <div class="nse-head"><span>Nivel del hogar <em>(por el ingreso total)</em></span><b id="mNse">—</b></div>
+        <div class="nse-scale" id="nseScale" aria-hidden="true"></div>
+        <div class="nse-note" id="mNseNote">—</div>
       </div>
     </div>
     <div class="verdict ok" id="verBox">
@@ -372,9 +378,9 @@
   </div>
 </div>
 
-<script src="assets/data.js?v=6"></script>
-<script src="assets/dashboard.js?v=6" defer></script>
-<script src="assets/game.js?v=6" defer></script>
-<script src="assets/bot.js?v=6" defer></script>
+<script src="assets/data.js?v=7"></script>
+<script src="assets/dashboard.js?v=7" defer></script>
+<script src="assets/game.js?v=7" defer></script>
+<script src="assets/bot.js?v=7" defer></script>
 </body>
 </html>

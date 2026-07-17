@@ -215,8 +215,18 @@ function calculadora() {
     percentil: document.getElementById("mPercentil"),
     nse: document.getElementById("mNse"),
     nseScale: document.getElementById("nseScale"),
+    nseNote: document.getElementById("mNseNote"),
   };
-  // Nivel socioeconómico según ingreso total del hogar (APEIM)
+  // Escala NSE de menor a mayor (E … A++), generada desde los datos
+  if (els.nseScale && !els.nseScale.children.length) {
+    els.nseScale.style.gridTemplateColumns = "repeat(" + DATA.nse.length + ",1fr)";
+    [...DATA.nse].reverse().forEach((n) => {
+      const s = document.createElement("span");
+      s.dataset.k = n.k; s.textContent = n.k;
+      els.nseScale.appendChild(s);
+    });
+  }
+  // Nivel socioeconómico según ingreso total del hogar (primero cuyo umbral cumple)
   const nseDe = (total) => DATA.nse.find((n) => total >= n.min) || DATA.nse[DATA.nse.length - 1];
   // Percentil estimado según ingreso per cápita (deciles INEI)
   const percentilPC = (x) => {
@@ -229,7 +239,10 @@ function calculadora() {
     return Math.min(99, Math.round(pts[pts.length - 1].p + (4 * x) / pts[pts.length - 1].s));
   };
   function render() {
-    const m = +rMiembros.value, ing = +rIngresos.value, monto = +rMonto.value;
+    const m = +rMiembros.value, monto = +rMonto.value;
+    // los que aportan no pueden superar a los integrantes
+    let ing = +rIngresos.value;
+    if (ing > m) { ing = m; rIngresos.value = m; }
     const total = ing * monto;
     const linea = m * DATA.pobreza.canasta_consumo_pc;
     const lineaExt = m * DATA.pobreza.canasta_alim_pc;
@@ -240,11 +253,12 @@ function calculadora() {
     out.linea.textContent = soles(linea);
     out.total.textContent = soles(total);
     out.percap.textContent = soles(percap);
-    // Percentil y NSE
+    // Percentil (por persona) y NSE (por hogar)
     const pct = percentilPC(percap);
-    out.percentil.innerHTML = pct + "% de la población 🇵🇪";
+    out.percentil.innerHTML = pct + "% de las personas 🇵🇪";
     const nse = nseDe(total);
     out.nse.textContent = "NSE " + nse.k + " · " + nse.nombre;
+    if (out.nseNote) out.nseNote.textContent = nse.desc;
     if (out.nseScale)
       [...out.nseScale.children].forEach((el) => el.classList.toggle("on", el.dataset.k === nse.k));
     let lab, big, exp, cls;

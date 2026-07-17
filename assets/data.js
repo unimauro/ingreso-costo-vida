@@ -60,14 +60,17 @@ const DATA = {
     mayor60_1940: 6.4, mayor60_2017: 11.9,
   },
 
-  // --- Niveles socioeconómicos (APEIM 2023–2024), por ingreso familiar mensual ---
-  // Umbrales referenciales del ingreso TOTAL del hogar (S/ / mes).
+  // --- Niveles socioeconómicos por ingreso TOTAL del hogar (S/ / mes) ---
+  // Base APEIM (A–E); A+ y A++ son extensiones para diferenciar ingresos muy altos.
+  // Orden de mayor a menor umbral (para elegir el primero que cumple).
   nse: [
-    { k: "A", nombre: "Alto",       min: 12000, desc: "≈ 1% de los hogares" },
-    { k: "B", nombre: "Medio alto", min: 7000,  desc: "≈ 11% de los hogares" },
-    { k: "C", nombre: "Medio",      min: 3600,  desc: "≈ 30% de los hogares" },
-    { k: "D", nombre: "Medio bajo", min: 2000,  desc: "≈ 33% de los hogares" },
-    { k: "E", nombre: "Bajo",       min: 0,     desc: "≈ 25% de los hogares" },
+    { k: "A++", nombre: "Élite",       min: 35000, desc: "top ~0,1% de hogares" },
+    { k: "A+",  nombre: "Muy alto",    min: 20000, desc: "top ~0,5% de hogares" },
+    { k: "A",   nombre: "Alto",        min: 12000, desc: "≈ 1% de los hogares" },
+    { k: "B",   nombre: "Medio alto",  min: 7000,  desc: "≈ 11% de los hogares" },
+    { k: "C",   nombre: "Medio",       min: 3600,  desc: "≈ 30% de los hogares" },
+    { k: "D",   nombre: "Medio bajo",  min: 2000,  desc: "≈ 33% de los hogares" },
+    { k: "E",   nombre: "Bajo",        min: 0,     desc: "≈ 25% de los hogares" },
   ],
 
   // --- Distribución del ingreso per cápita por decil (INEI/ENAHO, S/ / mes) ---
